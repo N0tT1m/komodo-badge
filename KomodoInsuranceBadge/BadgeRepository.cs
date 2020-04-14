@@ -32,17 +32,25 @@ namespace KomodoInsuranceBadge
             return null;
         }
 
-        public void UpdateBadge(int option, string door, int badgeID)
+        public bool? UpdateBadge(int option, string door, int badgeID)
         {
+            bool doorUpdate;
+            int startingCount = badges.Count;
+
             badge.DoorNames = GetBadgeByID(badgeID);
             if (option == 1)
             {
                 badge.DoorNames.Remove(door);
+                doorUpdate = (badges.Count < startingCount);
+                return doorUpdate;
             }
             if (option == 2)
             {
                 badge.DoorNames.Add(door);
+                doorUpdate = (badges.Count > startingCount);
+                return doorUpdate;
             }
+            return null;
         }
 
         public Dictionary<int, List<string>> GetAllBadges()

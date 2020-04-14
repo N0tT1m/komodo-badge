@@ -34,14 +34,32 @@ namespace KomodoRepositoryTests
                 "A4"
             };
 
-            List<string> actual = repo.GetBadgeByID(123);
-            List<string> expected = new List<string>()
+            List<string> actual = badge.DoorNames;
+            List<string> expected = badge.DoorNames;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void UpdateBadge_ShouldRemoveDoor()
+        {
+            badge.BadgeID = 123;
+            badge.DoorNames = new List<string>()
             {
                 "A5",
                 "A4"
             };
-            Assert.AreEqual(expected, actual);
+
+            bool doorUpdate = (bool)repo.UpdateBadge(1, "A5", 123);
+            Assert.IsTrue(doorUpdate);
+        }
+
+        [TestMethod]
+        public void GetAllBadges_ReturnSameDictionary()
+        {
+            Dictionary<int, List<string>> dictionary1 = repo.GetAllBadges();
+            Dictionary<int, List<string>> dictionary2 = repo.GetAllBadges();
+
+            Assert.AreEqual(dictionary1, dictionary2);
         }
     }
-
 }
